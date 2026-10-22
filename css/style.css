@@ -1,0 +1,357 @@
+:root {
+  --bg-color: #050505;
+  --accent-color: #e50914;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-color: #ffffff;
+  --text-muted: #aaaaaa;
+  --primary-gradient: linear-gradient(135deg, #e50914, #83050b);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Enhancing Glassmorphism */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Dynamic Buttons */
+.btn-glass-red {
+  background: var(--primary-gradient);
+  border: none;
+  color: white;
+  padding: 14px 35px;
+  border-radius: 50px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+}
+
+@media (max-width: 600px) {
+  .btn-glass-red {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+.btn-glass-red:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(229, 9, 20, 0.5);
+}
+
+/* Animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.animate-entrance {
+  animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.pulsate {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Improved inputs */
+input, select, textarea {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 15px;
+  border-radius: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  font-size: 16px;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px rgba(229, 9, 20, 0.1);
+}
+
+/* Progress Bar */
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 10px;
+}
+
+.step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #555;
+  transition: all 0.4s ease;
+  background: var(--bg-color);
+  z-index: 2;
+}
+
+.step-circle.active {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background: rgba(229, 9, 20, 0.1);
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+}
+
+.line {
+  flex-grow: 1;
+  height: 2px;
+  background: #555;
+  margin: 0 10px;
+  transition: background 0.4s ease;
+}
+
+.line.active {
+  background: var(--accent-color);
+}
+
+/* Layout */
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: transparent;
+}
+
+.hero-section {
+  position: relative;
+  height: 60vh;
+  background-image: url('/Netflix1.jpeg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.hero-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--bg-color));
+}
+
+.premium-description {
+  font-family: 'Georgia', serif;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  font-style: italic;
+}
+
+.posters-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.poster {
+  height: 200px;
+  background: #222;
+  border-radius: 20px;
+  transition: transform 0.3s;
+}
+
+.poster:hover {
+  transform: scale(1.05);
+}
+
+.container {
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.msg {
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  display: none;
+}
+
+.msg.error {
+  background: rgba(229, 9, 20, 0.2);
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  color: #ffcccc;
+}
+
+.msg.ok {
+  background: rgba(0, 128, 0, 0.2);
+  border: 1px solid rgba(0, 128, 0, 0.4);
+  color: #ccffcc;
+}
+
+/* Admin Modal */
+.admin-modal {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.details-grid p { margin: 0; }
+.details-grid strong { color: var(--text-muted); }
+
+.action-btns {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-small {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid var(--glass-border);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-small:hover {
+  background: var(--glass-border);
+}
+
+/* Payment Method Toggle Switch */
+.switch-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #333;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+
+.user-icon-btn {
+  background: none;
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.user-icon-btn:hover {
+  background: var(--glass-bg);
+}
+
+.user-icon-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 10px;
+  background: #1a1a1a;
+  border: 1px solid var(--glass-border);
+  padding: 1rem;
+  border-radius: 12px;
+  display: none;
+  z-index: 100;
+  min-width: 200px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+

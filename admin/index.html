@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Sky Streaming</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .admin-container { padding: 2rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { text-align: left; padding: 12px; border-bottom: 1px solid #333; }
+    .status-select { background: #111; color: white; padding: 5px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <header class="header-flex">
+    <h1 style="margin: 0; color: var(--accent-color);">ADMIN - SKY STREAMING</h1>
+    <button id="logoutBtn" class="btn-glass-red">Déconnexion</button>
+  </header>
+
+  <main class="admin-container">
+    <div id="adminContent" class="glass" style="padding: 2rem;">
+        <div style="margin-bottom: 2rem;">
+            <h2>Méthodes de paiement</h2>
+            <div id="paymentMethodsSettings" style="display: flex; gap: 1rem;"></div>
+        </div>
+        
+        <h2>Inscriptions</h2>
+        <table id="inscriptionsTable">
+            <thead>
+                <tr>
+                    <th>Utilisateur</th>
+                    <th>Plan</th>
+                    <th>WhatsApp</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="inscriptionsBody">
+                <!-- Rempli par admin.js -->
+            </tbody>
+        </table>
+    </div>
+    <div id="detailsModal" class="glass admin-modal" style="display:none;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin:0;">Détails</h3>
+            <button onclick="closeDetails()" style="background:none; border:none; cursor:pointer;">✕</button>
+        </div>
+        <div id="detailsContent"></div>
+    </div>
+  </main>
+
+  <script type="module" src="/admin/admin.js"></script>
+</body>
+</html>
