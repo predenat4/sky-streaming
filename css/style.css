@@ -359,4 +359,19 @@ input:checked + .slider:before {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+}
+
+.table-responsive::-webkit-scrollbar {
+    height: 6px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 3px;
 }
