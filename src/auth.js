@@ -1,3 +1,4 @@
+alert('JS actif');
 console.log('auth.js is loading...');
 
 document.addEventListener('DOMContentLoaded', async () => {
