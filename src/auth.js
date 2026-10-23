@@ -5,6 +5,9 @@ const signupForm = document.getElementById('signupForm');
 const loginForm = document.getElementById('loginForm');
 const msgEl = document.getElementById('msg');
 
+console.log('Signup form found:', signupForm);
+console.log('Login form found:', loginForm);
+
 if (signupForm) {
   signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
