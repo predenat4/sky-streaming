@@ -1,8 +1,9 @@
-alert('JS actif');
-console.log('auth.js is loading...');
+alert('JS actif - étape 1');
+console.log('--- AUTH SCRIPT RUNNING ---');
+alert('JS actif - étape 2');
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('DOM fully loaded.');
+  console.log('--- DOM LOADED ---');
   
   let supabase;
   try {
