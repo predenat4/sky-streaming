@@ -1,11 +1,20 @@
 console.log('auth.js is loading...');
-import { supabase } from './supabaseClient.js';
-import { showMsg } from './common.js';
 
-console.log('Imports successful.');
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   console.log('DOM fully loaded.');
+  
+  let supabase;
+  try {
+    const module = await import('./supabaseClient.js');
+    supabase = module.supabase;
+    console.log('Supabase imported successfully');
+  } catch (err) {
+    console.error('CRITICAL ERROR: Failed to import Supabase:', err);
+    return;
+  }
+
+  const { showMsg } = await import('./common.js');
+
   const signupForm = document.getElementById('signupForm');
   const loginForm = document.getElementById('loginForm');
   const msgEl = document.getElementById('msg');
