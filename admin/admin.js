@@ -110,8 +110,8 @@ window.viewDetails = async (id) => {
             <p><strong>Codes :</strong></p><p>${ins.codes_profil}</p>
         </div>
         <div class="action-btns">
-            <button class="btn-glass-red" onclick="handleAction('${ins.id}', 'paye')">Valider</button>
-            <button class="btn-secondary" onclick="handleAction('${ins.id}', 'annule')">Refuser</button>
+            <button class="btn-green" onclick="handleAction('${ins.id}', 'paye')">Valider</button>
+            <button class="btn-red" onclick="handleAction('${ins.id}', 'annule')">Refuser</button>
         </div>
     `;
     adminContent.style.display = 'none';

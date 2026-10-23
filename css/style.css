@@ -273,6 +273,34 @@ input:focus, select:focus, textarea:focus {
   background: var(--glass-border);
 }
 
+.btn-green {
+  background: rgba(0, 128, 0, 0.2);
+  border: 1px solid rgba(0, 128, 0, 0.4);
+  color: #ccffcc;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-green:hover {
+  background: rgba(0, 128, 0, 0.4);
+}
+
+.btn-red {
+  background: rgba(229, 9, 20, 0.2);
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  color: #ffcccc;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-red:hover {
+  background: rgba(229, 9, 20, 0.4);
+}
+
 /* Payment Method Toggle Switch */
 .switch-container {
     display: flex;
