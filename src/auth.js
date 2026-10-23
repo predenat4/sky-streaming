@@ -1,9 +1,10 @@
 alert('JS actif - étape 1');
-console.log('--- AUTH SCRIPT RUNNING ---');
+console.error('--- AUTH SCRIPT RUNNING (ERROR LOG) ---');
 alert('JS actif - étape 2');
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('--- DOM LOADED ---');
+  alert('DOM LOADED');
+  console.error('--- DOM LOADED (ERROR LOG) ---');
   
   let supabase;
   try {
