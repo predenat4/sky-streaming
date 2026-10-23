@@ -1,7 +1,11 @@
+console.log('auth.js is loading...');
 import { supabase } from './supabaseClient.js';
 import { showMsg } from './common.js';
 
+console.log('Imports successful.');
+
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM fully loaded.');
   const signupForm = document.getElementById('signupForm');
   const loginForm = document.getElementById('loginForm');
   const msgEl = document.getElementById('msg');
