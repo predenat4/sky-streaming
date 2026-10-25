@@ -124,6 +124,18 @@ window.closeDetails = () => {
 };
 
 window.handleAction = async (id, action) => {
+    // First fetch to get the phone number
+    const { data: ins, error: fetchError } = await supabase
+        .from('inscriptions')
+        .select('whatsapp')
+        .eq('id', id)
+        .single();
+
+    if (fetchError) {
+        alert('Erreur lors de la récupération du numéro: ' + fetchError.message);
+        return;
+    }
+
     const { error } = await supabase
         .from('inscriptions')
         .update({ statut: action })
@@ -132,6 +144,10 @@ window.handleAction = async (id, action) => {
     if (error) {
         alert('Erreur: ' + error.message);
     } else {
+        if (action === 'paye') {
+            // Redirect to WhatsApp
+            window.open('https://wa.me/' + ins.whatsapp, '_blank');
+        }
         closeDetails();
         loadInscriptions();
     }
