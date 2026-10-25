@@ -107,8 +107,8 @@ body {
 
 /* Improved inputs */
 input, select, textarea {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   padding: 15px;
   border-radius: 12px;
@@ -122,9 +122,20 @@ input, select, textarea {
 input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--accent-color);
-  background: rgba(255, 255, 255, 0.08);
+  background: #2a2a2a;
   box-shadow: 0 0 0 4px rgba(229, 9, 20, 0.1);
 }
+
+select {
+    color: white;
+}
+
+select option {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+
 
 /* Progress Bar */
 .progress-bar {
