@@ -74,12 +74,18 @@ async function loadInscriptions() {
             <td>${ins.nom_complet}</td>
             <td>${ins.plan}</td>
             <td>${ins.whatsapp}</td>
-            <td>${ins.statut}</td>
+            <td style="color: ${getStatusColor(ins.statut)}; font-weight: bold;">${ins.statut}</td>
             <td>
                 <button class="btn-small" onclick="viewDetails('${ins.id}')">Détails</button>
             </td>
         </tr>
     `).join('');
+}
+
+function getStatusColor(statut) {
+    if (statut === 'paye' || statut === 'livre') return '#ccffcc'; // Vert
+    if (statut === 'annule') return '#ffcccc'; // Rouge
+    return '#aaaaaa'; // Gris pâle
 }
 
 window.viewDetails = async (id) => {
