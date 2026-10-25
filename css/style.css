@@ -141,13 +141,16 @@ select#countryCode {
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 1em;
+    /* Ensure border radius is applied */
+    overflow: hidden;
 }
 
-/* Style pour la scrollbar du select (pour les navigateurs qui le supportent) */
+/* Force styling on options if possible */
 select#countryCode option {
     background-color: #1a1a1a;
     color: white;
     padding: 10px;
+    border-radius: 0; /* Options usually don't support border-radius */
 }
 
 
