@@ -283,7 +283,19 @@ select#countryCode option {
   color: #ccffcc;
 }
 
-/* Admin Modal */
+/* Status Badge */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid;
+    display: inline-block;
+}
+.status-green { background: rgba(0, 128, 0, 0.2); border-color: rgba(0, 128, 0, 0.4); color: #ccffcc; }
+.status-red { background: rgba(229, 9, 20, 0.2); border-color: rgba(229, 9, 20, 0.4); color: #ffcccc; }
+.status-gray { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); color: #aaaaaa; }
+
 .admin-modal {
   max-width: 500px;
   margin: 2rem auto;
