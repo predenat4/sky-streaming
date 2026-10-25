@@ -1,5 +1,5 @@
 import { supabase } from './supabaseClient.js';
-import { showMsg, PRIX, STATUTS, normPhone } from './common.js';
+import { showMsg, PRIX, STATUTS, normPhone, COUNTRY_CODES } from './common.js';
 
 const contentEl = document.getElementById('content');
 const userBtn = document.getElementById('userBtn');
