@@ -10,6 +10,7 @@ const logoutBtn = document.getElementById('logoutBtn');
 let formData = {};
 let wizardStep = 1;
 let isEditMode = false;
+let subscription = null;
 
 async function init() {
   isEditMode = false;
@@ -19,6 +20,23 @@ async function init() {
     return;
   }
   userEmailEl.textContent = user.email;
+
+  // Cleanup existing subscription
+  if (subscription) {
+    supabase.removeChannel(subscription);
+  }
+
+  // Subscribe to changes
+  subscription = supabase
+    .channel('inscriptions_changes')
+    .on(
+      'postgres_changes',
+      { event: 'UPDATE', schema: 'public', table: 'inscriptions', filter: `user_id=eq.${user.id}` },
+      (payload) => {
+        renderStatusView(payload.new);
+      }
+    )
+    .subscribe();
 
   const { data: fiche, error } = await supabase
     .from('inscriptions')
