@@ -110,6 +110,24 @@ async function renderWizard() {
         .select('*')
         .eq('is_enabled', true);
 
+      // Helper to extract country code and number
+      let initialCountry = '+509';
+      let initialNumber = '';
+      if (formData.whatsapp) {
+          if (formData.whatsapp.startsWith('509')) {
+              initialCountry = '+509';
+              initialNumber = formData.whatsapp.substring(3);
+          } else if (formData.whatsapp.startsWith('33')) {
+              initialCountry = '+33';
+              initialNumber = formData.whatsapp.substring(2);
+          } else if (formData.whatsapp.startsWith('1')) {
+              initialCountry = '+1';
+              initialNumber = formData.whatsapp.substring(1);
+          } else {
+              initialNumber = formData.whatsapp;
+          }
+      }
+
       wiz.innerHTML = `
         <div class="glass" style="padding: 1rem; margin-bottom: 1rem; font-size: 0.9rem;">
             <p style="margin: 0;">Effectuez votre dépôt ici :</p>
@@ -118,7 +136,14 @@ async function renderWizard() {
                 <strong style="color: var(--accent-color); font-size: 1.1rem;">42543980 (NatCash)</strong>
             </div>
         </div>
-        <input type="tel" id="whatsapp" placeholder="WhatsApp (509...)" value="${formData.whatsapp || ''}">
+        <div style="display: flex; gap: 0.5rem;">
+            <select id="countryCode" style="width: 120px;">
+                <option value="+509" ${initialCountry === '+509' ? 'selected' : ''}>HT (+509)</option>
+                <option value="+33" ${initialCountry === '+33' ? 'selected' : ''}>FR (+33)</option>
+                <option value="+1" ${initialCountry === '+1' ? 'selected' : ''}>US (+1)</option>
+            </select>
+            <input type="tel" id="whatsapp" placeholder="Numéro (ex: 3...)" value="${initialNumber}">
+        </div>
         <div style="display: flex; gap: 1rem; margin-bottom: 10px;">
             ${methods.map(m => `
               <label style="display:flex; align-items:center; gap:0.3rem;">
@@ -158,11 +183,13 @@ async function handleNext() {
     wizardStep++;
     await renderWizard();
   } else if (wizardStep === 3) {
-    formData.whatsapp = normPhone(document.getElementById('whatsapp').value);
+    const countryCode = document.getElementById('countryCode').value;
+    const number = normPhone(document.getElementById('whatsapp').value);
+    formData.whatsapp = countryCode.replace('+', '') + number;
     formData.operateur_choisi = document.querySelector('input[name="op"]:checked')?.value;
     formData.transCode = document.getElementById('transCode').value.replace(/\D/g, '');
     
-    if (!formData.whatsapp || !formData.operateur_choisi || !formData.transCode) {
+    if (!number || !formData.operateur_choisi || !formData.transCode) {
         return showMsg(document.getElementById('msg'), 'Remplissez tout', 'error');
     }
     
