@@ -126,14 +126,30 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 4px rgba(229, 9, 20, 0.1);
 }
 
-select {
-    color: white;
-}
-
-select option {
+/* Style pour les selects et options */
+select#countryCode {
     background-color: #1a1a1a;
     color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
 }
+
+/* Style pour la scrollbar du select (pour les navigateurs qui le supportent) */
+select#countryCode option {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 10px;
+}
+
 
 
 
@@ -439,16 +455,24 @@ input:checked + .slider:before {
     padding-bottom: 10px;
 }
 
-.table-responsive::-webkit-scrollbar {
-    height: 6px;
+/* Style pour la scrollbar globale */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-.table-responsive::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 3px;
+::-webkit-scrollbar-track {
+    background: #111;
+    border-radius: 4px;
 }
 
-.table-responsive::-webkit-scrollbar-thumb {
-    background: var(--glass-border);
-    border-radius: 3px;
+::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+    border: 2px solid #111;
 }
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
