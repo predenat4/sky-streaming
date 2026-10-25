@@ -145,8 +145,10 @@ window.handleAction = async (id, action) => {
         alert('Erreur: ' + error.message);
     } else {
         if (action === 'paye') {
-            // Redirect to WhatsApp
-            window.open('https://wa.me/' + ins.whatsapp, '_blank');
+            // Message for WhatsApp
+            const message = "Bienvenue chez Sky Streaming !%0D%0A%0D%0ANous avons le plaisir de vous confirmer que votre inscription a été validée avec succès. Toute notre équipe est ravie de vous compter parmi nos nouveaux membres premium, et nous mettons tout en œuvre pour vous garantir une expérience de divertissement exceptionnelle, riche en émotions et en qualité.%0D%0A%0D%0AVotre accès à l'intégralité de notre catalogue est désormais opérationnel. Vous pouvez dès maintenant explorer nos nouveautés et profiter de vos contenus favoris en toute fluidité. N'hésitez pas à nous contacter via cette discussion pour toute assistance technique. Excellente séance de visionnage !";
+            // Redirect to WhatsApp with message
+            window.open('https://wa.me/' + ins.whatsapp + '?text=' + message, '_blank');
         }
         closeDetails();
         loadInscriptions();
