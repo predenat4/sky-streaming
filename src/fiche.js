@@ -288,7 +288,9 @@ function renderStatusView(fiche) {
             return showMsg(document.getElementById('msg'), 'Erreur lors de la suppression: ' + error.message, 'error');
         }
         console.log('Delete successful');
-        // No need to call init() here as the subscription will handle it
+        
+        // ADDED: Force re-init to UI update since it's not deleting visually
+        init();
     });
 }
 
