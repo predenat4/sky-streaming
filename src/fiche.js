@@ -274,10 +274,20 @@ function renderStatusView(fiche) {
     });
 
     document.getElementById('deleteBtn').addEventListener('click', async () => {
+        console.log('Delete button clicked');
         if (!confirm('Êtes-vous sûr de vouloir supprimer votre fiche ?')) return;
-        const { data: { user } } = await supabase.auth.getUser();
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError) {
+             console.error('Error getting user:', userError);
+             return;
+        }
+        console.log('Deleting for user:', user.id);
         const { error } = await supabase.from('inscriptions').delete().eq('user_id', user.id);
-        if (error) return showMsg(document.getElementById('msg'), 'Erreur lors de la suppression: ' + error.message, 'error');
+        if (error) {
+            console.error('Delete error:', error);
+            return showMsg(document.getElementById('msg'), 'Erreur lors de la suppression: ' + error.message, 'error');
+        }
+        console.log('Delete successful');
         // No need to call init() here as the subscription will handle it
     });
 }
