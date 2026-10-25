@@ -31,9 +31,13 @@ async function init() {
     .channel('inscriptions_changes')
     .on(
       'postgres_changes',
-      { event: 'UPDATE', schema: 'public', table: 'inscriptions', filter: `user_id=eq.${user.id}` },
+      { event: '*', schema: 'public', table: 'inscriptions', filter: `user_id=eq.${user.id}` },
       (payload) => {
-        renderStatusView(payload.new);
+        if (payload.eventType === 'DELETE') {
+          renderWelcome();
+        } else {
+          renderStatusView(payload.new);
+        }
       }
     )
     .subscribe();
@@ -249,36 +253,36 @@ function renderStatusView(fiche) {
                 <strong>Statut : </strong> ${status.label}<br>
                 <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">${status.msg}</p>
             </div>
-            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <div id="actions" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
                 <button id="editBtn" class="btn-glass" style="flex: 1; padding: 10px;">Modifier</button>
                 <button id="deleteBtn" class="btn-glass-red" style="flex: 1; padding: 10px;">Supprimer</button>
             </div>
         </div>
     `;
 
-    document.getElementById('editBtn').addEventListener('click', () => {
-        isEditMode = true;
-        const parts = fiche.nom_complet.split(' ');
-        formData = {
-          nom: parts[0] || '',
-          prenom: parts.slice(1).join(' ') || '',
-          plan: fiche.plan,
-          whatsapp: fiche.whatsapp,
-          operateur_choisi: fiche.operateur_choisi,
-          transCode: fiche.numero_paiement,
-          nom_profil: fiche.nom_profil,
-          codes_profil: fiche.codes_profil
-        };
-        wizardStep = 1;
-        renderWizard();
-    });
-
-    document.getElementById('deleteBtn').addEventListener('click', async () => {
-        if (!confirm('Êtes-vous sûr de vouloir supprimer votre fiche ?')) return;
-        const { data: { user } } = await supabase.auth.getUser();
-        const { error } = await supabase.from('inscriptions').delete().eq('user_id', user.id);
-        if (error) return showMsg(document.getElementById('msg'), 'Erreur lors de la suppression', 'error');
-        init();
+    document.getElementById('actions').addEventListener('click', async (e) => {
+        if (e.target.id === 'editBtn') {
+            isEditMode = true;
+            const parts = fiche.nom_complet.split(' ');
+            formData = {
+                nom: parts[0] || '',
+                prenom: parts.slice(1).join(' ') || '',
+                plan: fiche.plan,
+                whatsapp: fiche.whatsapp,
+                operateur_choisi: fiche.operateur_choisi,
+                transCode: fiche.numero_paiement,
+                nom_profil: fiche.nom_profil,
+                codes_profil: fiche.codes_profil
+            };
+            wizardStep = 1;
+            renderWizard();
+        } else if (e.target.id === 'deleteBtn') {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer votre fiche ?')) return;
+            const { data: { user } } = await supabase.auth.getUser();
+            const { error } = await supabase.from('inscriptions').delete().eq('user_id', user.id);
+            if (error) return showMsg(document.getElementById('msg'), 'Erreur lors de la suppression', 'error');
+            init();
+        }
     });
 }
 
