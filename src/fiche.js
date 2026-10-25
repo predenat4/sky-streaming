@@ -9,8 +9,10 @@ const logoutBtn = document.getElementById('logoutBtn');
 
 let formData = {};
 let wizardStep = 1;
+let isEditMode = false;
 
 async function init() {
+  isEditMode = false;
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
     window.location.href = '/login.html';
@@ -161,14 +163,19 @@ async function handleNext() {
     if (!user) return showMsg(document.getElementById('msg'), 'Non connecté', 'error');
     formData.user_id = user.id;
     const transCodeValue = formData.transCode;
-    console.log('transCodeValue:', transCodeValue); // Debugging
     formData.numero_paiement = transCodeValue;
-    console.log('Step 4 formData before insert:', formData); // Debugging
     delete formData.nom;
     delete formData.prenom;
     delete formData.transCode;
 
-    const { error } = await supabase.from('inscriptions').insert([formData]);
+    let error;
+    if (isEditMode) {
+      ({ error } = await supabase.from('inscriptions').update(formData).eq('user_id', user.id));
+      isEditMode = false;
+    } else {
+      ({ error } = await supabase.from('inscriptions').insert([formData]));
+    }
+    
     if (error) showMsg(document.getElementById('msg'), 'Erreur: ' + error.message, 'error');
     else init();
   }
@@ -197,8 +204,37 @@ function renderStatusView(fiche) {
                 <strong>Statut : </strong> ${status.label}<br>
                 <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">${status.msg}</p>
             </div>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                <button id="editBtn" class="btn-glass" style="flex: 1; padding: 10px;">Modifier</button>
+                <button id="deleteBtn" class="btn-glass-red" style="flex: 1; padding: 10px;">Supprimer</button>
+            </div>
         </div>
     `;
+
+    document.getElementById('editBtn').addEventListener('click', () => {
+        isEditMode = true;
+        const parts = fiche.nom_complet.split(' ');
+        formData = {
+          nom: parts[0] || '',
+          prenom: parts.slice(1).join(' ') || '',
+          plan: fiche.plan,
+          whatsapp: fiche.whatsapp,
+          operateur_choisi: fiche.operateur_choisi,
+          transCode: fiche.numero_paiement,
+          nom_profil: fiche.nom_profil,
+          codes_profil: fiche.codes_profil
+        };
+        wizardStep = 1;
+        renderWizard();
+    });
+
+    document.getElementById('deleteBtn').addEventListener('click', async () => {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer votre fiche ?')) return;
+        const { data: { user } } = await supabase.auth.getUser();
+        const { error } = await supabase.from('inscriptions').delete().eq('user_id', user.id);
+        if (error) return showMsg(document.getElementById('msg'), 'Erreur lors de la suppression', 'error');
+        init();
+    });
 }
 
 logoutBtn.addEventListener('click', async () => {

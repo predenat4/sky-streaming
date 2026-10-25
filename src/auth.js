@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const loginForm = document.getElementById('loginForm');
   const msgEl = document.getElementById('msg');
 
+  // Check for existing session
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session && (window.location.pathname === '/login.html' || window.location.pathname === '/signup.html')) {
+    window.location.href = '/fiche.html';
+  }
+
   if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
