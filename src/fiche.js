@@ -26,7 +26,7 @@ async function init() {
     supabase.removeChannel(subscription);
   }
 
-  // Subscribe to changes
+    // Subscribe to changes
   subscription = supabase
     .channel('inscriptions_changes')
     .on(
@@ -35,7 +35,7 @@ async function init() {
       (payload) => {
         if (payload.eventType === 'DELETE') {
           renderWelcome();
-        } else {
+        } else if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
           renderStatusView(payload.new);
         }
       }
@@ -253,29 +253,29 @@ function renderStatusView(fiche) {
         </div>
     `;
 
-    document.getElementById('actions').addEventListener('click', async (e) => {
-        if (e.target.id === 'editBtn') {
-            isEditMode = true;
-            const parts = fiche.nom_complet.split(' ');
-            formData = {
-                nom: parts[0] || '',
-                prenom: parts.slice(1).join(' ') || '',
-                plan: fiche.plan,
-                whatsapp: fiche.whatsapp,
-                operateur_choisi: fiche.operateur_choisi,
-                transCode: fiche.numero_paiement,
-                nom_profil: fiche.nom_profil,
-                codes_profil: fiche.codes_profil
-            };
-            wizardStep = 1;
-            renderWizard();
-        } else if (e.target.id === 'deleteBtn') {
-            if (!confirm('Êtes-vous sûr de vouloir supprimer votre fiche ?')) return;
-            const { data: { user } } = await supabase.auth.getUser();
-            const { error } = await supabase.from('inscriptions').delete().eq('user_id', user.id);
-            if (error) return showMsg(document.getElementById('msg'), 'Erreur lors de la suppression', 'error');
-            init();
-        }
+    document.getElementById('editBtn').addEventListener('click', () => {
+        isEditMode = true;
+        const parts = fiche.nom_complet.split(' ');
+        formData = {
+            nom: parts[0] || '',
+            prenom: parts.slice(1).join(' ') || '',
+            plan: fiche.plan,
+            whatsapp: fiche.whatsapp,
+            operateur_choisi: fiche.operateur_choisi,
+            transCode: fiche.numero_paiement,
+            nom_profil: fiche.nom_profil,
+            codes_profil: fiche.codes_profil
+        };
+        wizardStep = 1;
+        renderWizard();
+    });
+
+    document.getElementById('deleteBtn').addEventListener('click', async () => {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer votre fiche ?')) return;
+        const { data: { user } } = await supabase.auth.getUser();
+        const { error } = await supabase.from('inscriptions').delete().eq('user_id', user.id);
+        if (error) return showMsg(document.getElementById('msg'), 'Erreur lors de la suppression: ' + error.message, 'error');
+        // No need to call init() here as the subscription will handle it
     });
 }
 
