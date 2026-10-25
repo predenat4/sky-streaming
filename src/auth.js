@@ -14,9 +14,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   const loginForm = document.getElementById('loginForm');
   const msgEl = document.getElementById('msg');
 
-  // Check for existing session
+  // Listen for auth changes
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      window.location.href = '/fiche.html';
+    }
+  });
+
+  // Check for existing session on load
   const { data: { session } } = await supabase.auth.getSession();
-  if (session && (window.location.pathname === '/login.html' || window.location.pathname === '/signup.html')) {
+  if (session) {
     window.location.href = '/fiche.html';
   }
 

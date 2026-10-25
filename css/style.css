@@ -357,6 +357,10 @@ input:checked + .slider:before {
 }
 
 
+.user-menu {
+    position: relative;
+}
+
 .user-icon-btn {
   background: none;
   border: 1px solid var(--glass-border);
