@@ -142,7 +142,7 @@ async function renderWizard() {
             <input type="tel" id="whatsapp" placeholder="Numéro" value="${initialNumber}">
         </div>
         <div style="display: flex; gap: 1rem; margin-bottom: 10px;">
-            ${methods.map(m => `
+            ${(methods || []).map(m => `
               <label style="display:flex; align-items:center; gap:0.3rem;">
                   <img src="/${m.name}.jpeg" style="width:20px; height:20px; border-radius:50%;">
                   <input type="radio" name="op" value="${m.name}" ${formData.operateur_choisi === m.name ? 'checked' : ''}> ${m.name.charAt(0).toUpperCase() + m.name.slice(1)}
