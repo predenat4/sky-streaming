@@ -256,7 +256,7 @@ function renderStatusView(fiche) {
         </div>
     `;
 
-    document.getElementById('editBtn').addEventListener('click', () => {
+    document.getElementById('editBtn').onclick = () => {
         isEditMode = true;
         const parts = fiche.nom_complet.split(' ');
         formData = {
@@ -271,27 +271,21 @@ function renderStatusView(fiche) {
         };
         wizardStep = 1;
         renderWizard();
-    });
+    };
 
-    document.getElementById('deleteBtn').addEventListener('click', async () => {
-        console.log('Delete button clicked');
+    document.getElementById('deleteBtn').onclick = async () => {
         if (!confirm('Êtes-vous sûr de vouloir supprimer votre fiche ?')) return;
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
-        if (userError) {
-             console.error('Error getting user:', userError);
-             return;
-        }
-        console.log('Deleting for user:', user.id);
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        // Optimistic update: clear UI
+        contentEl.innerHTML = '<h2>Suppression...</h2>';
+
         const { error } = await supabase.from('inscriptions').delete().eq('user_id', user.id);
         if (error) {
-            console.error('Delete error:', error);
-            return showMsg(document.getElementById('msg'), 'Erreur lors de la suppression: ' + error.message, 'error');
+            showMsg(document.getElementById('msg'), 'Erreur lors de la suppression: ' + error.message, 'error');
+            init(); // Restore view if delete fails
         }
-        console.log('Delete successful');
-        
-        // ADDED: Force re-init to UI update since it's not deleting visually
-        init();
-    });
+    };
 }
 
 logoutBtn.addEventListener('click', async () => {
