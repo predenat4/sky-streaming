@@ -109,10 +109,13 @@ async function renderWizard() {
       `;
       break;
     case 3:
-      const { data: methods } = await supabase
+      const { data: methods, error: methodsError } = await supabase
         .from('payment_methods')
         .select('*')
         .eq('is_enabled', true);
+      
+      console.log('Methods:', methods);
+      console.log('Methods Error:', methodsError);
 
       // Helper to extract country code and number
       let initialCountry = '+509';
