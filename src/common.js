@@ -18,7 +18,9 @@ export const COUNTRY_CODES = [
   { name: 'Chili', code: '+56' },
   { name: 'Colombie', code: '+57' },
   { name: 'Mexique', code: '+52' },
-  { name: 'Argentine', code: '+54' }
+  { name: 'Argentine', code: '+54' },
+  { name: 'Sénégal', code: '+221' },
+  { name: 'Togo', code: '+228' }
 ];
 
 export const STATUTS = {
