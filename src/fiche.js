@@ -118,15 +118,10 @@ async function renderWizard() {
       let initialCountry = '+509';
       let initialNumber = '';
       if (formData.whatsapp) {
-          if (formData.whatsapp.startsWith('509')) {
-              initialCountry = '+509';
-              initialNumber = formData.whatsapp.substring(3);
-          } else if (formData.whatsapp.startsWith('33')) {
-              initialCountry = '+33';
-              initialNumber = formData.whatsapp.substring(2);
-          } else if (formData.whatsapp.startsWith('1')) {
-              initialCountry = '+1';
-              initialNumber = formData.whatsapp.substring(1);
+          const matched = COUNTRY_CODES.find(c => formData.whatsapp.startsWith(c.code.replace('+', '')));
+          if (matched) {
+              initialCountry = matched.code;
+              initialNumber = formData.whatsapp.substring(matched.code.replace('+', '').length);
           } else {
               initialNumber = formData.whatsapp;
           }
@@ -141,12 +136,10 @@ async function renderWizard() {
             </div>
         </div>
         <div style="display: flex; gap: 0.5rem;">
-            <select id="countryCode" style="width: 120px;">
-                <option value="+509" ${initialCountry === '+509' ? 'selected' : ''}>HT (+509)</option>
-                <option value="+33" ${initialCountry === '+33' ? 'selected' : ''}>FR (+33)</option>
-                <option value="+1" ${initialCountry === '+1' ? 'selected' : ''}>US (+1)</option>
+            <select id="countryCode" style="width: 150px;">
+                ${COUNTRY_CODES.map(c => `<option value="${c.code}" ${initialCountry === c.code ? 'selected' : ''}>${c.name} (${c.code})</option>`).join('')}
             </select>
-            <input type="tel" id="whatsapp" placeholder="Numéro (ex: 3...)" value="${initialNumber}">
+            <input type="tel" id="whatsapp" placeholder="Numéro" value="${initialNumber}">
         </div>
         <div style="display: flex; gap: 1rem; margin-bottom: 10px;">
             ${methods.map(m => `
