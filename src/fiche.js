@@ -222,7 +222,12 @@ async function handleNext() {
     }
     
     if (error) showMsg(document.getElementById('msg'), 'Erreur: ' + error.message, 'error');
-    else init();
+    else {
+        // Redirection vers WhatsApp après succès
+        const msgWhatsApp = encodeURIComponent("Bonjour, je viens de faire une inscription sur Sky Streaming.");
+        window.open(`https://wa.me/${formData.whatsapp}?text=${msgWhatsApp}`, '_blank');
+        init();
+    }
   }
 }
 
@@ -284,6 +289,8 @@ function renderStatusView(fiche) {
         if (error) {
             showMsg(document.getElementById('msg'), 'Erreur lors de la suppression: ' + error.message, 'error');
             init(); // Restore view if delete fails
+        } else {
+            renderWelcome(); // Correctly redirect to Welcome view
         }
     };
 }
